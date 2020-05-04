@@ -16,7 +16,10 @@ def new_snl(html):
     snl_ind = html.index('11:00 PM')
     lp_ind = html.index('1:00:00')
     shorter_html = html[snl_ind:lp_ind]
-    new_index = shorter_html.index('data-new_show="')
+    if 'data-new_show="' in shorter_html:
+        new_index = shorter_html.index('data-new_show="')
+    else:
+        return "TBD"
     #a "1" here indicates that the show is new
     if shorter_html[new_index+15] == '1':
         return True
@@ -30,7 +33,10 @@ def snl_guests(html):
     lp_ind = html.index('1:00:00')
     shorter_html = html[snl_ind:lp_ind]
     #finds where the guests are in the html
-    guest_ind = shorter_html.index('data-guest="')
+    if 'data-guest="' in shorter_html:
+        guest_ind = shorter_html.index('data-guest="')
+    else:
+        return "TBD"
     guest_str = shorter_html[guest_ind+12:]
     guest_end = guest_str.index('"')
     guests = guest_str[:guest_end]
@@ -40,9 +46,11 @@ def snl_guests(html):
 
 #prints whether or not snl is new this week and who the guests are
 def snl_this_week():
-    if new_snl(text):
+    if new_snl(text)==True:
         print("SNL is new this week! The host is "+snl_guests(text)[0]+", and the musical guest is"+snl_guests(text)[1]+".")
-    else:
+    elif new_snl(text)==False:
         print("SNL is a rerun this week. The host is "+snl_guests(text)[0]+", and the musical guest is"+snl_guests(text)[1]+".")
+    else:
+        print("SNL is still TBD this week.")
 
 snl_this_week()
