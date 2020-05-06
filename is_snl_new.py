@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import date_to_sat as ds
 
 # Sets the page to crawl, set the correct date for the upcoming Saturday
+# Could not crawl nbc, so I had to use a secondary site. Unfortunately, it does not update as quickly
 url = "https://www.tvpassport.com/tv-listings/stations/nbc-network-eastern/1227/"+ds.get_sat()
 response = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
 html = response.content
