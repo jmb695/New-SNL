@@ -6,15 +6,15 @@ def get_sat():
     today = date.today()
     weekday = today.weekday()
     s_today = str(today)
-    #weekday = 6 signals it is a saturday
-    if weekday != 6:
+    #weekday = 5 signals it is a saturday
+    if weekday != 5:
         #splits, converts date to numbers
         year, mo, d = s_today.split('-')
         d_num = int(d)
         mo_num = int(mo)
         year_num = int(year)
         #finds how many days until the next saturday
-        day_to_sat = 6 - weekday
+        day_to_sat = 5 - weekday
         #these are months with 31 days
         if mo_num == 1 or 3 or 5 or 7 or 8 or 10:
             if d_num + day_to_sat > 31:
