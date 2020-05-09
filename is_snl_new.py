@@ -22,7 +22,7 @@ def new_snl(html):
     else:
         return "TBD"
     #a "1" here indicates that the show is new
-    if shorter_html[new_index+15] == '1':
+    if shorter_html[new_index+15] == '1' or '<span class="show-label live">' in shorter_html:
         return True
     else:
         return False
