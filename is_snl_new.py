@@ -29,22 +29,21 @@ def new_snl(html):
 
 #this finds who the guests are of the week's episode
 def snl_guests(html):
-    #cuts the html down to just the show
+    #cuts the html down to just the show timeslot
     snl_ind = html.index('11:30 PM')
     lp_ind = html.index('1:00 AM')
     shorter_html = html[snl_ind:lp_ind]
-    #finds where the guests are in the html
-    if 'data-guest="' in shorter_html and shorter_html[shorter_html.index('data-guest="')+12] != '"':
-        guest_ind = shorter_html.index('data-guest="')
-    #fixes a bug where guest data is empty. This seems to be the case for COVID episodes
+    #finds the show description within this shorter html
+    descrip = shorter_html[shorter_html.index('<p>')+3:]
+    descrip = descrip[:descrip.index('</p>')]
+    #looks for the host and musical guest within this text
+    if 'hosts' in descrip:
+        host = descrip[:descrip.index(' host')]
+        music_guest = descrip[descrip.index('and')+4:descrip.index(' is')]
+        return host, music_guest
+    #returns TBD if hosts for the week are not yet reported
     else:
-        return ['TBD', 'TBD']
-    guest_str = shorter_html[guest_ind+12:]
-    guest_end = guest_str.index('"')
-    guests = guest_str[:guest_end]
-    #splits host and musical guest
-    host, music_guest = guests.split(',')
-    return host, music_guest
+        return['TBD', 'TBD']   
 
 #prints whether or not snl is new this week and who the guests are
 def snl_this_week():
